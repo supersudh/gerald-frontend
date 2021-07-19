@@ -36,3 +36,17 @@
     transform: rotate(360deg);
   }
 }
+
+
+.green {
+  color: #00b8a9 !important;
+}
+
+.red {
+  color: #e62434 !important;
+}
+
+.validate-otp-btn, .request-otp-btn {
+  margin-left: 1rem !important;
+  margin-top: 0.5rem !important;
+}
