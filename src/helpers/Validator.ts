@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080';
+const API_URL = 'https://gerald-sudh-be.herokuapp.com' || 'http://localhost:8080';
 
 export default class Validator {
   static async requestOTP(phone: string): Promise<boolean> {
@@ -10,6 +10,7 @@ export default class Validator {
       };
 
       const {data: result} = await axios.post(`${API_URL}/users/generateOTP`, body);
+      console.log(result);
       if (result.status === 'ok') {
         return true;
       } else {

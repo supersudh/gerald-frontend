@@ -101,8 +101,15 @@ export default class App extends React.Component<iProps, iState> {
           variant="outlined"
           value={this.state.phone}
           onChange={this.onChangePhone}
+          disabled={this.state.loading}
         />
-        <Button variant="contained" color="primary" onClick={this.handleRequestOTP} className="request-otp-btn">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.handleRequestOTP}
+          className="request-otp-btn"
+          disabled={this.state.loading}
+        >
           Request OTP
         </Button>
       </div>
@@ -125,7 +132,13 @@ export default class App extends React.Component<iProps, iState> {
           onChange={this.onChangeOTP}
           disabled={this.state.hasValidatedOTP}
         />
-        <Button variant="contained" color="primary" onClick={this.handleValidateOTP} className="validate-otp-btn">
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={this.handleValidateOTP}
+          className="validate-otp-btn"
+          disabled={this.state.loading || this.state.hasValidatedOTP}
+        >
           Validate OTP
         </Button>
       </div>
