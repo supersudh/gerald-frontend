@@ -47,23 +47,32 @@ export default class App extends React.Component<iProps, iState> {
   }
 
   handleRequestOTP = async () => {
-    const { phone } = this.state;
-    if (phoneGex.test(phone)) {
-      const success = await Validator.requestOTP(phone);
-      if (success) {
-        this.setState({ hasRequestedOTP: true });
+    try {
+      if (this.state.loading) return;
+      this.setState({ loading: true });
+      const { phone } = this.state;
+      if (phoneGex.test(phone)) {
+        const success = await Validator.requestOTP(phone);
+        if (success) {
+          this.setState({ hasRequestedOTP: true });
+        } else {
+          this.setState({ errorMessage: 'There was an error. Please try again...' })
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
+        }
       } else {
-        this.setState({ errorMessage: 'There was an error. Please try again...' })
-        setTimeout(() => {
-          window.location.reload();
-        }, 2000);
+        this.setState({ errorMessage: 'Enter a valid 10-digit mobile number' });
       }
-    } else {
-      this.setState({ errorMessage: 'Enter a valid 10-digit mobile number' });
+    } catch (error) {
+
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
   handleValidateOTP = async () => {
+    if (this.state.loading) return;
     const { phone, otp } = this.state;
     if (otpGex.test(otp)) {
       const success = await Validator.validateOTP(phone, otp);
@@ -110,7 +119,7 @@ export default class App extends React.Component<iProps, iState> {
           className="request-otp-btn"
           disabled={this.state.loading}
         >
-          Request OTP
+          {this.state.loading ? 'Loading...' : 'Request OTP'}
         </Button>
       </div>
     );
@@ -139,7 +148,7 @@ export default class App extends React.Component<iProps, iState> {
           className="validate-otp-btn"
           disabled={this.state.loading || this.state.hasValidatedOTP}
         >
-          Validate OTP
+          {this.state.loading ? 'Loading...' : 'Validate OTP'}
         </Button>
       </div>
     );
