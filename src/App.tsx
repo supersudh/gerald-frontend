@@ -21,8 +21,8 @@ interface iState {
   loading: boolean;
 }
 
-const phoneGex = /\d{10}/;
-const otpGex = /\d{6}/;
+const phoneGex = /^\d{10}$/;
+const otpGex = /^\d{6}$/;
 export default class App extends React.Component<iProps, iState> {
   constructor(props: iProps) {
     super(props);
